@@ -1,17 +1,19 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { userService } from './user.services';
+import { StudentValidationSchema } from '../students/student.validation';
 
-const createUserInDBControler = async (req: Request, res: Response) => {
+const createUserInDBControler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const { password, studentData } = req.body;
-    const result = await userService.createUserInDB(password, studentData);
+    const validate = StudentValidationSchema.parse(studentData);
+    const result = await userService.createUserInDB(password, validate);
     res.send(result);
-  } catch (error: any) {
-    res.status(404).json({
-      success: false,
-      message: error.message || 'something went wrong.',
-      error: error,
-    });
+  } catch (error) {
+    next(error);
   }
 };
 

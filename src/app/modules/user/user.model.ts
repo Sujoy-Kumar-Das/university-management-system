@@ -40,7 +40,6 @@ const UserSchema = new Schema<Tuser, TUserExistsMethod>(
   },
 );
 
-
 // save password in database as hash
 UserSchema.pre('save', async function (next) {
   const user = this;
@@ -51,14 +50,12 @@ UserSchema.pre('save', async function (next) {
   next();
 });
 
-
 // delete password form response data
 UserSchema.methods.toJSON = function () {
   const user = this.toObject();
   delete user.password;
   return user;
 };
-
 
 UserSchema.statics.isUserExists = async function (id: string) {
   const isExists = await UserModel.findOne({ id });

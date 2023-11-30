@@ -5,6 +5,9 @@ import { Tuser } from './user.interface';
 import { UserModel } from './user.model';
 
 const createUserInDB = async (password: string, studentData: TStudent) => {
+  if (await StudentModel.isUsersEmailExists(studentData.email)) {
+    throw new Error('User already exists.');
+  }
   const userData: Partial<Tuser> = {};
   userData.password = password || config.default_password;
   userData.role = 'student';

@@ -2,7 +2,7 @@ import { Model, Types } from 'mongoose';
 
 export type TUserName = {
   firstName: string;
-  middleName: string;
+  middleName?: string;
   lastName: string;
 };
 
@@ -24,8 +24,7 @@ export type TLocalGuardian = {
 
 export type TStudent = {
   id: string;
-  user: Types.ObjectId;
-  password: string;
+  user: Types.ObjectId | string;
   name: TUserName;
   gender: 'male' | 'female' | 'other';
   dateOfBirth?: string;
@@ -38,9 +37,9 @@ export type TStudent = {
   guardian: TGuardian;
   localGuardian: TLocalGuardian;
   profileImg?: string;
-  addmisionSemister:string;
-  isDeleted: boolean;
+  addmisionSemister: string;
 };
 
-
-
+export interface TCheckStudentEmail extends Model<TStudent> {
+  isUsersEmailExists(email: string): Promise<TStudent | null>;
+}
