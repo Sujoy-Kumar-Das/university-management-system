@@ -1,9 +1,11 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import { userRouter } from './app/modules/user/user.router';
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import notFoundErrorHandler from './app/middlewares/notFound';
 import router from './app/routers';
+import { AnyZodObject } from 'zod';
+import { StudentValidationSchema } from './app/modules/students/student.validation';
 const app = express();
 
 // express middlewares

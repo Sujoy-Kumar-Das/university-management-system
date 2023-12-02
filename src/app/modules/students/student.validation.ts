@@ -50,33 +50,37 @@ const LocalGuardianValidationSchema = z.object({
 });
 
 export const StudentValidationSchema = z.object({
-  id: z.string().min(1, { message: 'ID must have at least 1 character' }),
-  user: z
-    .string()
-    .min(1, { message: 'User ID must have at least 1 character' }),
-  name: UserNameValidationSchema,
-  gender: z.enum(['male', 'female', 'other']),
-  dateOfBirth: z.string().optional(),
-  email: z.string().email({ message: 'Invalid email format' }),
-  contactNo: z
-    .string()
-    .min(1, { message: 'Contact number must have at least 1 character' }),
-  emergencyContactNo: z.string().min(1, {
-    message: 'Emergency contact number must have at least 1 character',
+  body: z.object({
+    password: z
+      .string()
+      .min(8, { message: 'Password must be 8 charecters long.' })
+      .optional(),
+    studentData: z.object({
+      name: UserNameValidationSchema,
+      gender: z.enum(['male', 'female', 'other']),
+      dateOfBirth: z.string().optional(),
+      email: z.string().email({ message: 'Invalid email format' }),
+      contactNo: z
+        .string()
+        .min(1, { message: 'Contact number must have at least 1 character' }),
+      emergencyContactNo: z.string().min(1, {
+        message: 'Emergency contact number must have at least 1 character',
+      }),
+      bloogGroup: z
+        .enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
+        .optional(),
+      addmisionSemister: z.string().min(1, {
+        message: 'Student admission semester must have at least 1 character',
+      }),
+      presentAddress: z
+        .string()
+        .min(1, { message: 'Present address must have at least 1 character' }),
+      permanentAddress: z.string().min(1, {
+        message: 'Permanent address must have at least 1 character',
+      }),
+      guardian: GuardianValidationSchema,
+      localGuardian: LocalGuardianValidationSchema,
+      profileImg: z.string().optional(),
+    }),
   }),
-  bloogGroup: z
-    .enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
-    .optional(),
-  addmisionSemister: z.string().min(1, {
-    message: 'Student admission semester must have at least 1 character',
-  }),
-  presentAddress: z
-    .string()
-    .min(1, { message: 'Present address must have at least 1 character' }),
-  permanentAddress: z
-    .string()
-    .min(1, { message: 'Permanent address must have at least 1 character' }),
-  guardian: GuardianValidationSchema,
-  localGuardian: LocalGuardianValidationSchema,
-  profileImg: z.string().optional(),
 });
