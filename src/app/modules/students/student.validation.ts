@@ -69,8 +69,11 @@ export const StudentValidationSchema = z.object({
       bloogGroup: z
         .enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
         .optional(),
-      addmisionSemister: z.string().min(1, {
+      academicSemester: z.string().min(1, {
         message: 'Student admission semester must have at least 1 character',
+      }),
+      academicDepartment: z.string().min(1, {
+        message: 'Student admission deparment must have at least 1 character',
       }),
       presentAddress: z
         .string()

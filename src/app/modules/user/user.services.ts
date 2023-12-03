@@ -2,6 +2,8 @@ import config from '../../config';
 import { TStudent } from '../students/student.interface';
 import { StudentModel } from '../students/student.model';
 import { Tuser } from './user.interface';
+import { academicSemesterModel } from '../academicSemester/academicSemester.model';
+import { genareteUserId } from './user.utils';
 import { UserModel } from './user.model';
 
 const createUserInDB = async (password: string, studentData: TStudent) => {
@@ -12,8 +14,12 @@ const createUserInDB = async (password: string, studentData: TStudent) => {
   userData.password = password || config.default_password;
   userData.role = 'student';
 
-  //set manually generated it
-  userData.id = '2030100002';
+  const academicSemesterInfo = await academicSemesterModel.findById(
+    studentData.academicSemester,
+  );
+
+  //set auto generated it
+  userData.id = await genareteUserId(academicSemesterInfo);
 
   const newUser = await UserModel.create(userData);
   if (Object.keys(newUser).length) {

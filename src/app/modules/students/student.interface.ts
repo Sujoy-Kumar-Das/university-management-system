@@ -37,7 +37,8 @@ export type TStudent = {
   guardian: TGuardian;
   localGuardian: TLocalGuardian;
   profileImg?: string;
-  addmisionSemister: string;
+  academicSemester: Types.ObjectId;
+  academicDepartment: Types.ObjectId;
 };
 
 export interface TCheckStudentEmail extends Model<TStudent> {

@@ -43,6 +43,7 @@ const getSingleAcademicSemesterControler = catchAsync(
     });
   },
 );
+
 export const academicSemesterControler = {
   createSemisterIntoDBControler,
   getAllAcademicSemesterControler,

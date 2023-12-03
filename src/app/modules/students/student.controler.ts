@@ -1,20 +1,34 @@
-// import { Request, Response } from 'express';
-// import { studentService } from './student.services';
+import { Request, Response } from 'express';
+import catchAsync from '../../utils/catchAsync';
+import sendResponse from '../../utils/sendResponse';
+import { studentService } from './student.services';
 
-// const createStudentInDB = async (req: Request, res: Response) => {
-//   try {
-//     const { studentData } = req.body;
-//     const result = await studentService.createStudnetInDB(studentData);
-//     res.status(200).json({
-//       success: true,
-//       message: 'Student created successfully.',
-//       data: result,
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+const getAllStudentFromDBControler = catchAsync(
+  async (req: Request, res: Response) => {
+    const result = await studentService.getAllStudentFromFromDB();
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: 'All student loaded successfully.',
+      data: result,
+    });
+  },
+);
 
-// export const studentControler = {
-//     createStudentInDB
-// }
+const getSingleStudentFromDBControler = catchAsync(
+  async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const result = await studentService.getSingleStudentFromFromDB(id);
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: 'Student loaded successfully.',
+      data: result,
+    });
+  },
+);
+
+export const studentControler = {
+  getAllStudentFromDBControler,
+  getSingleStudentFromDBControler,
+};

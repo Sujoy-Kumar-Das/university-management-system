@@ -18,7 +18,7 @@ const getAllAcademicSemesterFromDB = async () => {
   return result;
 };
 
-const getSingleAcademicSemesterFromDB = async (id: ObjectId) => {
+const getSingleAcademicSemesterFromDB = async (id: string) => {
   const result = await academicSemesterModel.findById({
     _id: new ObjectId(id),
   });

@@ -117,9 +117,15 @@ const studentSchema = new Schema<TStudent, TCheckStudentEmail>(
         message: '{VALUE} is not a valid blood group',
       },
     },
-    addmisionSemister: {
-      type: String,
+    academicSemester: {
+      type: Schema.Types.ObjectId,
       required: [true, 'Student addmision semister is required.'],
+      ref: 'academicSemester',
+    },
+    academicDepartment: {
+      type: Schema.Types.ObjectId,
+      required: [true, 'Student addmision department is required.'],
+      // ref: 'academicSemester',
     },
     presentAddress: {
       type: String,
