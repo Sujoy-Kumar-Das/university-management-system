@@ -31,7 +31,6 @@ const UserSchema = new Schema<Tuser, TUserExistsMethod>(
     },
     isDeleted: {
       type: Boolean,
-      required: true,
       default: false,
     },
   },

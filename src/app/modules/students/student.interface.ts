@@ -39,6 +39,7 @@ export type TStudent = {
   profileImg?: string;
   academicSemester: Types.ObjectId;
   academicDepartment: Types.ObjectId;
+  isDeleted: boolean;
 };
 
 export interface TCheckStudentEmail extends Model<TStudent> {

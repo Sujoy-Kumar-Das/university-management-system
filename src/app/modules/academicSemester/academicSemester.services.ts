@@ -4,10 +4,11 @@ import {
   academicSemesterMapper,
   academicSemesterModel,
 } from './academicSemester.model';
+import AppError from '../../error/AppError';
 
 const createAcademicSemesterIntoDB = async (payLoad: TAcademicSemister) => {
   if (academicSemesterMapper[payLoad.name] !== payLoad.code) {
-    throw new Error('Invalid semester code.');
+    throw new AppError(403, 'Invalid semester code.');
   }
   const result = await academicSemesterModel.create(payLoad);
   return result;

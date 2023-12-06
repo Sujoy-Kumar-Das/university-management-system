@@ -125,7 +125,7 @@ const studentSchema = new Schema<TStudent, TCheckStudentEmail>(
     academicDepartment: {
       type: Schema.Types.ObjectId,
       required: [true, 'Student addmision department is required.'],
-      // ref: 'academicSemester',
+      ref: 'academicDepartment',
     },
     presentAddress: {
       type: String,
@@ -144,6 +144,9 @@ const studentSchema = new Schema<TStudent, TCheckStudentEmail>(
       required: [true, 'Local guardian information is required'],
     },
     profileImg: { type: String },
+    isDeleted: {
+      type: Boolean,
+    },
   },
   {
     timestamps: true,
@@ -154,6 +157,16 @@ studentSchema.statics.isUsersEmailExists = async function (email: string) {
   const isExists = await StudentModel.findOne({ email });
   return isExists;
 };
+
+studentSchema.pre('find', async function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+
+studentSchema.pre('findOne', async function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
 
 export const StudentModel = mongoose.model<TStudent, TCheckStudentEmail>(
   'student',

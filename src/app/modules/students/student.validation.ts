@@ -84,6 +84,7 @@ export const StudentValidationSchema = z.object({
       guardian: GuardianValidationSchema,
       localGuardian: LocalGuardianValidationSchema,
       profileImg: z.string().optional(),
+      isDeleted: z.boolean().optional(),
     }),
   }),
 });

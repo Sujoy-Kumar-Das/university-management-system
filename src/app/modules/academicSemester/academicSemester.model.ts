@@ -1,10 +1,14 @@
 import mongoose from 'mongoose';
-import { TAcademicSemesterMapper, TAcademicSemister } from './academicSemester.interface';
+import {
+  TAcademicSemesterMapper,
+  TAcademicSemister,
+} from './academicSemester.interface';
 import {
   AcademicSemesterCode,
   AcademicSemesterMonth,
   AcademicSemesterName,
 } from './academicSemester.constant';
+import AppError from '../../error/AppError';
 
 export const academicSemesterSchema = new mongoose.Schema<TAcademicSemister>(
   {
@@ -40,7 +44,6 @@ export const academicSemesterMapper: TAcademicSemesterMapper = {
   Fall: '03',
 };
 
-
 academicSemesterSchema.pre('save', async function (next) {
   const isExists = await academicSemesterModel.findOne({
     name: this.name,
@@ -48,7 +51,7 @@ academicSemesterSchema.pre('save', async function (next) {
   });
 
   if (isExists) {
-    throw new Error('This semister already exists.');
+    throw new AppError(403, 'This semister already exists.');
   }
   next();
 });
